@@ -1,0 +1,1 @@
+This module serves as a wrapper for payment processing.

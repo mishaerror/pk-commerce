@@ -1,4 +1,4 @@
-package com.pk.commerce.order.domain;
+package com.pk.commerce.merchant.api;
 
 public class Merchant {
 }

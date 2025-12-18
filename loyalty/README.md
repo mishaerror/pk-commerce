@@ -1,0 +1,1 @@
+This module handles customer loyalty points collection and logic.

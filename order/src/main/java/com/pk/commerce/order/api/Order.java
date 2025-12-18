@@ -1,6 +1,4 @@
-package com.pk.commerce.order.domain;
-
-import com.pk.commerce.order.value.OrderState;
+package com.pk.commerce.order.api;
 
 public class Order {
     private OrderState state;

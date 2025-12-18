@@ -1,4 +1,4 @@
-package com.pk.commerce.order.value;
+package com.pk.commerce.order.api;
 
 public enum OrderState {
     CUSTOMER_INITIATED,//customer opens the page
