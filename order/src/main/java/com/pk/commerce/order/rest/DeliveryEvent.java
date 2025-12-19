@@ -1,7 +1,6 @@
 package com.pk.commerce.order.rest;
 
-import com.pk.commerce.order.state.DeliveryEventType;
-import com.pk.commerce.order.api.OrderId;
+import com.pk.commerce.order.api.OrderRef;
 
-public record DeliveryEvent(OrderId orderId, DeliveryEventType eventType, String comment, Long timestamp) {
+public record DeliveryEvent(OrderRef orderRef, String comment, Long timestamp) {
 }

@@ -3,6 +3,6 @@ package com.pk.commerce.merchant.rest;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ItemsController {
-    //view items, group into categories
+public class CategoriesController {
+    //view and edit categories/subcategories
 }

@@ -2,7 +2,9 @@ package com.pk.commerce.merchant.rest;
 
 import org.springframework.web.bind.annotation.RestController;
 
+//merchant order management
 @RestController
-public class ItemsController {
-    //view items, group into categories
+public class OrderController {
+    //view and filter orders
+    //update order status
 }
