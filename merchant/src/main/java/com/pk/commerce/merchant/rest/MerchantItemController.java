@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //merchant account details
 @RestController
-public class MerchantController {
+public class MerchantItemController {
     //view and filter items
-    //edit item image, name, price, discount
+    //edit item image, name, price, discount, hide from the shop, delete
     //generate short links: encodeBase52(itemRef)
 }
