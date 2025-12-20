@@ -16,6 +16,11 @@ public class MerchantRegistrationService {
         this.merchantRepository = merchantRepository;
     }
 
+    //
+    public boolean merchantEmailExists(String email){
+        return merchantRepository.findByEmail(email).isPresent();
+    }
+
     //registration request - merchant in pending status
     public void addMerchantRegistrationRequest(String name, String shopName,
                                                String contactPerson,

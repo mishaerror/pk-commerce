@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: merchant
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 939916800727-pdmvqks4go07af20cf9d3vnodu4i8721.apps.googleusercontent.com
+            scope:
+              - openid
+              - email
+              - profile
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+
+server.port: 8090
+
+logging:
+  level:
+    org.flywaydb: DEBUG
