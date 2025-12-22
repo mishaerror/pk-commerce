@@ -3,6 +3,11 @@ spring:
     name: merchant
   security:
     oauth2:
+      default-success-url: http://localhost:5173/dashboard
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://accounts.google.com/.well-known/openid-configuration
       client:
         registration:
           google:
@@ -15,8 +20,25 @@ spring:
           google:
             issuer-uri: https://accounts.google.com
 
-server.port: 8090
+  ssl:
+    bundle:
+      jks:
+        server:
+          keystore:
+            location: classpath:keystore/merchant.jks
+            password: kwxy4o1
+            type: PKCS12
 
-logging:
-  level:
-    org.flywaydb: DEBUG
+server:
+  port: 8443
+  ssl:
+    bundle: server
+
+custom.security.oauth2.redirect-url: http://localhost:5173/auth/callback
+
+server.servlet.session.cookie:
+  http-only: true
+  secure: true
+  same-site: none
+  domain: localhost
+
