@@ -3,11 +3,6 @@ spring:
     name: merchant
   security:
     oauth2:
-      default-success-url: http://localhost:5173/dashboard
-      resourceserver:
-        jwt:
-          issuer-uri: https://accounts.google.com
-          jwk-set-uri: https://accounts.google.com/.well-known/openid-configuration
       client:
         registration:
           google:
@@ -34,7 +29,13 @@ server:
   ssl:
     bundle: server
 
-custom.security.oauth2.redirect-url: http://localhost:5173/auth/callback
+custom.security:
+  oauth2:
+    redirect-url: http://localhost:5173/auth/callback
+    jwt-secret: kwlvIo30PkalqxZmTeklspOgfrTKFMDsuQzwBE39tzPqmsedyakfhjOAU
+    jwt-expiry: 30
+  token:
+    password: mmakprjshson782nndkgfakofbvbbaos909akamm2904jopashjfmsajkfkobhfdyftqdwj
 
 server.servlet.session.cookie:
   http-only: true

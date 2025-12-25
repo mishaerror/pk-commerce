@@ -6,9 +6,9 @@ CREATE TABLE MERCHANTS
 (
     id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     ref BIGINT UNIQUE,
-    name VARCHAR(100) UNIQUE NOT NULL,
-    shop_name  VARCHAR(100) UNIQUE NOT NULL,
-    contact_person  VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    shop_name VARCHAR(100) UNIQUE,
+    contact_person  VARCHAR(100),
     email  VARCHAR(100) UNIQUE NOT NULL,
     phone  VARCHAR(100),
     address  VARCHAR(100),

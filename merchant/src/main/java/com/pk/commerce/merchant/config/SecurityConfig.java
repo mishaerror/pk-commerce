@@ -24,6 +24,7 @@ public class SecurityConfig {
 
     private final Oauth2AuthenticationSuccessHandler authenticationSuccessHandler;
 
+
     public SecurityConfig(Oauth2AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
@@ -32,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/", "/login**", "/error", "/static/**", "/oauth**").permitAll()
+                                .requestMatchers("/", "/login**", "/error", "/static/**", "/oauth**", "/api/auth/me").permitAll()
                                 .anyRequest().authenticated()
                 ).logout(l -> l.logoutSuccessUrl("/oauth_login"))
                 .oauth2Login(
@@ -42,8 +43,9 @@ public class SecurityConfig {
                                 .successHandler(authenticationSuccessHandler)
                 ).sessionManagement(sessionManagement ->
                         sessionManagement
-                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .formLogin(AbstractHttpConfigurer::disable);
         return http.build();
@@ -54,7 +56,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setExposedHeaders(Arrays.asList("Set-Cookie"));
+        configuration.setExposedHeaders(List.of("Set-Cookie"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);

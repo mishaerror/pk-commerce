@@ -3,10 +3,9 @@ package com.pk.commerce.merchant.domain.admin;
 import com.pk.commerce.merchant.api.MerchantStatus;
 import com.pk.commerce.merchant.db.MerchantEntity;
 import com.pk.commerce.merchant.db.MerchantRepository;
-import com.pk.commerce.merchant.exception.EmailNotUniqueException;
-import com.pk.commerce.merchant.exception.NameNotUniqueException;
-import com.pk.commerce.merchant.exception.ShopNameNotUniqueException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class MerchantRegistrationService {
@@ -16,42 +15,60 @@ public class MerchantRegistrationService {
         this.merchantRepository = merchantRepository;
     }
 
-    //
-    public boolean merchantEmailExists(String email){
-        return merchantRepository.findByEmail(email).isPresent();
+    public Optional<MerchantEntity> merchantEmailExists(String email) {
+        return merchantRepository.findByEmail(email);
     }
 
     //registration request - merchant in pending status
-    public void addMerchantRegistrationRequest(String name, String shopName,
+    public Long addMerchantRegistrationRequest(String name, String shopName,
                                                String contactPerson,
                                                String email, String phone, String address) {
 
-        //TODO validate uniqueness of email and name, shop name
-        if(merchantRepository.findByName(name).isPresent()) {
-            throw new NameNotUniqueException();
+        //TODO validate uniqueness of email shop name
+
+
+        MerchantEntity merchantEntity;
+        if (merchantRepository.findByEmail(email).isEmpty()) {
+            merchantEntity = new MerchantEntity.Builder()
+                    .merchantName(name)
+                    .merchantRef(merchantRepository.refSequence())
+                    .status(MerchantStatus.PENDING.name())
+                    .contactPerson(contactPerson)
+                    .merchantShopName(shopName)
+                    .merchantEmail(email)
+                    .merchantPhone(phone)
+                    .merchantAddress(address)
+                    .build();
+        } else {
+            merchantEntity = merchantRepository.findByEmail(email).get();
+            merchantEntity.setStatus(shopName);
+            merchantEntity.setName(name);
+            merchantEntity.setContactPerson(contactPerson);
+            merchantEntity.setPhone(phone);
+            merchantEntity.setStatus(MerchantStatus.ACTIVE.name());
         }
-        if(merchantRepository.findByEmail(email).isPresent()) {
-            throw new EmailNotUniqueException();
-        }
-        if(merchantRepository.findByShopName(shopName).isPresent()) {
-            throw new ShopNameNotUniqueException();
-        }
 
 
+        return merchantRepository.save(merchantEntity).getRef();
+    }
 
-        MerchantEntity merchantEntity = new MerchantEntity.Builder()
-                .merchantName(name)
-                .merchantRef(merchantRepository.refSequence())
-                .status(MerchantStatus.PENDING.name())
-                .contactPerson(contactPerson)
-                .merchantShopName(shopName)
-                .merchantEmail(email)
-                .merchantPhone(phone)
-                .merchantAddress(address)
-                .build();
+    //registration request - merchant in pending status
+    public Long updateMerchantRegistrationRequest(String name, String shopName,
+                                                  String contactPerson,
+                                                  String email, String phone, String address) {
+
+        //TODO validate uniqueness of email shop name
 
 
-        merchantRepository.save(merchantEntity);
+        MerchantEntity merchantEntity = merchantRepository.findByEmail(email).get();
+        merchantEntity.setStatus(shopName);
+        merchantEntity.setName(name);
+        merchantEntity.setContactPerson(contactPerson);
+        merchantEntity.setPhone(phone);
+        merchantEntity.setStatus(MerchantStatus.ACTIVE.name());
+
+
+        return merchantRepository.save(merchantEntity).getRef();
     }
 
     public void approveMerchantRegistration() {

@@ -90,6 +90,10 @@ public class MerchantEntity {
         this.address = address;
     }
 
+    public boolean isRegistered(){
+        return !this.status.equals(MerchantStatus.PENDING.name());
+    }
+
 
     public Merchant toMerchant() {
         return new Merchant.Builder()
