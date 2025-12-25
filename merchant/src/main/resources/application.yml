@@ -36,7 +36,7 @@ custom.security:
     jwt-expiry: 30
   token:
     password: mmakprjshson782nndkgfakofbvbbaos909akamm2904jopashjfmsajkfkobhfdyftqdwj
-
+#https://medium.com/@AlexanderObregon/cookie-based-auth-in-spring-boot-without-using-sessions-d795c1d530e0
 server.servlet.session.cookie:
   http-only: true
   secure: true
