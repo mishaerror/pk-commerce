@@ -1,4 +1,7 @@
-package com.pk.commerce.merchant.api;
+package com.pk.commerce.merchant.api.item;
+
+import com.pk.commerce.merchant.api.Amount;
+import com.pk.commerce.merchant.api.Currency;
 
 public class ItemPrice {
     private final Currency currency;

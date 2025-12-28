@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.api;
+package com.pk.commerce.merchant.api.item;
 
 public class Item {
     private final ItemRef ref;

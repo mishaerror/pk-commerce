@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.rest.merchant;
+package com.pk.commerce.merchant.rest.api;
 
 import org.springframework.web.bind.annotation.RestController;
 

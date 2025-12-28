@@ -21,12 +21,15 @@ import java.util.List;
 public class SecurityConfig {
     private final Oauth2AuthenticationSuccessHandler authenticationSuccessHandler;
     private final TokenCookieOrHeaderFilter tokenCookieOrHeaderFilter;
+    private final MerchantRefFilter merchantRefFilter;
+
     @Value("${custom.security.oauth2.redirect-url}")
     private String redirectUrl;
 
-    public SecurityConfig(Oauth2AuthenticationSuccessHandler authenticationSuccessHandler, TokenCookieOrHeaderFilter tokenCookieOrHeaderFilter) {
+    public SecurityConfig(Oauth2AuthenticationSuccessHandler authenticationSuccessHandler, TokenCookieOrHeaderFilter tokenCookieOrHeaderFilter, MerchantRefFilter merchantRefFilter) {
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.tokenCookieOrHeaderFilter = tokenCookieOrHeaderFilter;
+        this.merchantRefFilter = merchantRefFilter;
     }
 
     @Bean
@@ -46,6 +49,7 @@ public class SecurityConfig {
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .addFilterBefore(tokenCookieOrHeaderFilter, OAuth2LoginAuthenticationFilter.class)
+                .addFilterAfter(merchantRefFilter, TokenCookieOrHeaderFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .formLogin(AbstractHttpConfigurer::disable);

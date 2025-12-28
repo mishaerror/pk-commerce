@@ -1,6 +1,6 @@
 package com.pk.commerce.merchant.domain.admin;
 
-import com.pk.commerce.merchant.api.MerchantStatus;
+import com.pk.commerce.merchant.api.merchant.MerchantStatus;
 import com.pk.commerce.merchant.db.MerchantEntity;
 import com.pk.commerce.merchant.db.MerchantRepository;
 import org.springframework.stereotype.Service;
