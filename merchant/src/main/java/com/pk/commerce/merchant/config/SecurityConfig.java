@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -19,32 +19,33 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final Oauth2AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final TokenCookieOrHeaderFilter tokenCookieOrHeaderFilter;
     @Value("${custom.security.oauth2.redirect-url}")
     private String redirectUrl;
 
-    private final Oauth2AuthenticationSuccessHandler authenticationSuccessHandler;
-
-
-    public SecurityConfig(Oauth2AuthenticationSuccessHandler authenticationSuccessHandler) {
+    public SecurityConfig(Oauth2AuthenticationSuccessHandler authenticationSuccessHandler, TokenCookieOrHeaderFilter tokenCookieOrHeaderFilter) {
         this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.tokenCookieOrHeaderFilter = tokenCookieOrHeaderFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/", "/login**", "/error", "/static/**", "/oauth**", "/api/auth/me").permitAll()
+                                .requestMatchers(AuthConstants.EXCLUDE_AUTH_PATTERNS).permitAll()
                                 .anyRequest().authenticated()
-                ).logout(l -> l.logoutSuccessUrl("/oauth_login"))
+                ).logout(l -> l
+                        .deleteCookies(AuthConstants.AUTH_COOKIE_NAME))
                 .oauth2Login(
                         oauth -> oauth
-                                .loginPage("/oauth_login")
                                 .defaultSuccessUrl(redirectUrl, true)
                                 .successHandler(authenticationSuccessHandler)
                 ).sessionManagement(sessionManagement ->
                         sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .addFilterBefore(tokenCookieOrHeaderFilter, OAuth2LoginAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .formLogin(AbstractHttpConfigurer::disable);
@@ -54,9 +55,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setExposedHeaders(List.of("Set-Cookie"));
+        configuration.setExposedHeaders(List.of("Set-Cookie", "Cookie"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);

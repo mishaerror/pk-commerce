@@ -84,7 +84,7 @@ public class Merchant {
         private String merchantPhone;
         private String merchantEmail;
 
-        public Builder status(String status){
+        public Builder status(String status) {
             this.status = status;
             return this;
         }
@@ -127,39 +127,39 @@ public class Merchant {
         public Merchant build() {
             Merchant merchant = new Merchant();
 
-            if(this.status != null) {
+            if (this.status != null) {
                 merchant.setStatus(MerchantStatus.valueOf(status));
             }
 
-            if(this.merchantRef != null) {
+            if (this.merchantRef != null) {
                 merchant.setMerchantRef(new MerchantRef(this.merchantRef));
             }
 
 
-            if(this.merchantName != null) {
+            if (this.merchantName != null) {
                 merchant.setMerchantName(new MerchantName(this.merchantName));
             }
 
 
-            if(this.merchantShopName != null) {
+            if (this.merchantShopName != null) {
                 merchant.setMerchantShopName(new MerchantShopName(this.merchantShopName));
             }
 
-            if(this.contactPerson != null) {
+            if (this.contactPerson != null) {
                 merchant.setMerchantContactPerson(new MerchantContactPerson(contactPerson));
             }
 
-            if(this.merchantAddress != null) {
+            if (this.merchantAddress != null) {
                 merchant.setMerchantAddress(new MerchantAddress(this.merchantAddress));
             }
 
 
-            if(this.merchantPhone != null) {
+            if (this.merchantPhone != null) {
                 merchant.setMerchantPhone(new MerchantPhone(this.merchantPhone));
             }
 
 
-            if(this.merchantEmail != null) {
+            if (this.merchantEmail != null) {
                 merchant.setMerchantEmail(new MerchantEmail(this.merchantEmail));
             }
 

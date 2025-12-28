@@ -31,15 +31,14 @@ server:
 
 custom.security:
   oauth2:
-    redirect-url: http://localhost:5173/auth/callback
+#    redirect-url: http://localhost:5173/auth/callback
+    redirect-url: https://pk-commerce.co/auth/callback
     jwt-secret: kwlvIo30PkalqxZmTeklspOgfrTKFMDsuQzwBE39tzPqmsedyakfhjOAU
     jwt-expiry: 30
   token:
     password: mmakprjshson782nndkgfakofbvbbaos909akamm2904jopashjfmsajkfkobhfdyftqdwj
-#https://medium.com/@AlexanderObregon/cookie-based-auth-in-spring-boot-without-using-sessions-d795c1d530e0
+
 server.servlet.session.cookie:
   http-only: true
   secure: true
   same-site: none
-  domain: localhost
-

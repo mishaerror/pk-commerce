@@ -14,7 +14,7 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private static String authorizationRequestBaseUri
+    private static final String authorizationRequestBaseUri
             = "oauth2/authorization";
     Map<String, String> oauth2AuthenticationUrls
             = new HashMap<>();
@@ -37,6 +37,6 @@ public class LoginController {
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
         model.addAttribute("urls", oauth2AuthenticationUrls);
 
-        return "oauth_login.html";
+        return "login.html";
     }
 }

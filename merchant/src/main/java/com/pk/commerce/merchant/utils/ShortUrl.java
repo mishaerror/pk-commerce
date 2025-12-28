@@ -18,7 +18,7 @@ public class ShortUrl {
         do {
             BigInteger[] divideAndRemainder = number.divideAndRemainder(FIFTY_TWO);
 
-           result.insert(0, mapping[divideAndRemainder[1].intValue()]);
+            result.insert(0, mapping[divideAndRemainder[1].intValue()]);
 
             number = divideAndRemainder[0];
         } while (number.compareTo(BigInteger.ZERO) > 0);

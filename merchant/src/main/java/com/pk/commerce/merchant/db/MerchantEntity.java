@@ -1,6 +1,7 @@
 package com.pk.commerce.merchant.db;
 
-import com.pk.commerce.merchant.api.*;
+import com.pk.commerce.merchant.api.Merchant;
+import com.pk.commerce.merchant.api.MerchantStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -90,7 +91,7 @@ public class MerchantEntity {
         this.address = address;
     }
 
-    public boolean isRegistered(){
+    public boolean isRegistered() {
         return !this.status.equals(MerchantStatus.PENDING.name());
     }
 

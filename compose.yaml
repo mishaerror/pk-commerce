@@ -17,9 +17,16 @@ services:
       POSTGRES_PASSWORD: example
     ports:
       - 5432:5432
+#
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
 
-  adminer:
-    image: adminer
-    restart: always
+  nginx:
+    image: nginx
     ports:
-      - 8080:8080
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/sites_available

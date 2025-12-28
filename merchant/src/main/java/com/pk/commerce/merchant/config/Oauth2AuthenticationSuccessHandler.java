@@ -6,8 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -16,18 +14,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 
 @Component
 public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+    public static final String JWT_FLOW_REGISTER = "register";
+    private final MerchantRegistrationService merchantRegistrationService;
+    private final JwtService jwtService;
     @Value("${custom.security.oauth2.redirect-url}")
     private String redirectUrl;
-
-    private final MerchantRegistrationService merchantRegistrationService;
-
-    private final JwtService jwtService;
 
     public Oauth2AuthenticationSuccessHandler(MerchantRegistrationService merchantRegistrationService, JwtService jwtService) {
         this.merchantRegistrationService = merchantRegistrationService;
@@ -52,20 +46,20 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         boolean merchantExists = merchantRegistrationService.merchantEmailExists(email).isPresent();
 
-        String authToken = jwtService.generateToken(email, name, picture, merchantExists ? "register" : "").getTokenValue();
+        String authToken = jwtService.generateToken(email, name, picture, merchantExists ? JWT_FLOW_REGISTER : "").getTokenValue();
 
         Cookie authCookie = new Cookie("Auth", authToken);
         authCookie.setHttpOnly(true);
         authCookie.setSecure(true);
-        authCookie.setDomain("localhost");
         authCookie.setPath("/");
-        authCookie.setAttribute("SameSite", "lax");
+        authCookie.setAttribute("SameSite", "None");
         authCookie.setMaxAge(60 * 10);
         response.addCookie(authCookie);
 
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 
-
-        String params = "?Auth=" + authToken;
+        String params = "";
         if (!merchantExists) {
             params += "&flow=REGISTER";
             merchantRegistrationService.addMerchantRegistrationRequest(name, null, null, email, null, null);

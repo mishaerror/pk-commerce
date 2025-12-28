@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MerchantService {
-    public void getDetails(){
+    public void getDetails() {
 
     }
 

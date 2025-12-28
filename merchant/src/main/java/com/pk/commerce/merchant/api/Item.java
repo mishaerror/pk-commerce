@@ -1,8 +1,8 @@
 package com.pk.commerce.merchant.api;
 
 public class Item {
-    private ItemRef ref;
-    private ItemPrice price;
+    private final ItemRef ref;
+    private final ItemPrice price;
     private ItemDiscount discount;
 
     public Item(ItemRef ref, ItemPrice price) {
@@ -10,7 +10,7 @@ public class Item {
         this.price = price;
     }
 
-    public void applyDiscount(ItemDiscount discount){
+    public void applyDiscount(ItemDiscount discount) {
         this.discount = discount;
     }
 
@@ -22,7 +22,7 @@ public class Item {
         return price;
     }
 
-    public ItemDiscount getDiscount(){
+    public ItemDiscount getDiscount() {
         return discount;
     }
 }

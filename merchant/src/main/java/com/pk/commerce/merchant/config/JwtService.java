@@ -12,7 +12,6 @@ import java.time.temporal.ChronoUnit;
 @Component
 public class JwtService {
 
-
     private final JwtEncoder jwtEncoder;
 
     private final JwtDecoder jwtDecoder;
@@ -36,8 +35,5 @@ public class JwtService {
                 .claim("picture", picture)
                 .claim("scope", scope)
                 .build()));
-
-
     }
-
 }

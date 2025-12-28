@@ -5,7 +5,7 @@ public class ItemCategory {
     private ItemCategoryName name;
     private ItemCategory parentCategory;
 
-    public ItemCategory(Merchant merchant, ItemCategoryName name, ItemCategory parentCategory){
+    public ItemCategory(Merchant merchant, ItemCategoryName name, ItemCategory parentCategory) {
         this.merchant = merchant;
         this.name = name;
         this.parentCategory = parentCategory;
