@@ -1,4 +1,9 @@
 package com.pk.commerce.merchant.api;
 
-public record Amount(Double amount, Currency currency) {
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.math.BigDecimal;
+
+public record Amount(@JsonValue BigDecimal amount) {
+
 }
