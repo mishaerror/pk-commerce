@@ -15,6 +15,6 @@ import java.util.Optional;
 public class ImagesController {
     @PostMapping
     ResponseEntity<?> upload(@RequestBody MultipartFile file) {
-        return ResponseEntity.ok(new RestResponse("uplaoded", "image uploaded", Optional.of(12234)));
+        return ResponseEntity.ok(new RestResponse("uploaded", "image uploaded", Optional.of(12234)));
     }
 }

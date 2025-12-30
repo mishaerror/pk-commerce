@@ -1,0 +1,15 @@
+CREATE SEQUENCE item_ref_seq
+    INCREMENT 5
+START 100;
+
+CREATE TABLE ITEMS
+(
+    id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    ref BIGINT UNIQUE,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    amount DECIMAL(10, 2),
+    currency VARCHAR(3),
+    discount DECIMAL(3,2),
+    image_ref VARCHAR(20),
+    merchant_ref BIGINT NOT NULL
+);

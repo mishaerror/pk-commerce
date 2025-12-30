@@ -7,5 +7,6 @@ public class AuthConstants {
             "/static/**",
             "/oauth_login",
             "/api/auth/login",
-            "/api/auth/logout"};
+            "/api/auth/logout",
+            "/login/oauth2/code/google"};
 }

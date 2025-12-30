@@ -24,7 +24,7 @@ import java.util.List;
 import static com.pk.commerce.merchant.config.AuthConstants.AUTH_COOKIE_NAME;
 
 @Component
-public class TokenCookieOrHeaderFilter extends OncePerRequestFilter {
+public class TokenCookieFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final List<PathPatternRequestMatcher> matchers = Arrays.stream(AuthConstants.EXCLUDE_AUTH_PATTERNS)
@@ -33,7 +33,7 @@ public class TokenCookieOrHeaderFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
 
-    public TokenCookieOrHeaderFilter(JwtService jwtService) {
+    public TokenCookieFilter(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
@@ -67,7 +67,7 @@ public class TokenCookieOrHeaderFilter extends OncePerRequestFilter {
         }
 
         if (token == null) {
-            LOGGER.error("Token not found in cookie or header, returning UNAUTHORIZED.");
+            LOGGER.error("Token not found in cookie or header of uri={}, returning UNAUTHORIZED.", request.getRequestURI());
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else {
 
