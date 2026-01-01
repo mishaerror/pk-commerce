@@ -1,16 +1,14 @@
 package com.pk.commerce.merchant.rest.api;
 
-import com.pk.commerce.merchant.api.Amount;
-import com.pk.commerce.merchant.api.CurrencyCode;
 import com.pk.commerce.merchant.api.item.Item;
-import com.pk.commerce.merchant.api.item.ItemName;
-import com.pk.commerce.merchant.api.item.ItemPrice;
-import com.pk.commerce.merchant.api.item.ItemRef;
 import com.pk.commerce.merchant.domain.item.ItemService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 @RestController
@@ -18,31 +16,34 @@ import java.util.List;
 public class ItemController {
     private final ItemService itemService;
 
-    //view and filter items
-    private final Item dummyItem = new Item(
-            new ItemRef(123L),
-            new ItemName("123"),
-            new ItemPrice(new Amount(BigDecimal.ONE), CurrencyCode.RSD),
-            null);
-
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
 
     @PostMapping
     public ResponseEntity<?> addItem(@RequestBody ItemRequest itemRequest) {
-        itemService.add(itemRequest.name(), itemRequest.price().amount(), itemRequest.price().currency(), itemRequest.discount() != null ? itemRequest.discount().percent() : null, null);
+        BigDecimal discount = null;
+        if (StringUtils.hasText(itemRequest.discount())) {
+            discount = new BigDecimal(itemRequest.discount(), new MathContext(5, RoundingMode.CEILING)).setScale(2, RoundingMode.CEILING);
+        }
+        itemService.add(itemRequest.name(), itemRequest.price().amount(), itemRequest.price().currency(), discount, itemRequest.count(), null);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> editItem(@RequestBody ItemRequest itemRequest) {
-        return ResponseEntity.ok(dummyItem);
+        BigDecimal discount = null;
+        if (StringUtils.hasText(itemRequest.discount())) {
+            discount = new BigDecimal(itemRequest.discount(), new MathContext(5, RoundingMode.CEILING)).setScale(2, RoundingMode.CEILING);
+        }
+        itemService.edit(itemRequest.ref(), itemRequest.name(), itemRequest.price().amount(), itemRequest.price().currency(), discount, itemRequest.count(), null);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{itemRef}")
     public ResponseEntity<?> getItem(@PathVariable("itemRef") String itemRef) {
-        return ResponseEntity.ok(dummyItem);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -52,8 +53,9 @@ public class ItemController {
     }
 
     @DeleteMapping("/{itemRef}")
-    public ResponseEntity<?> deleteItem(@PathVariable("itemRef") String itemRef) {
-        return ResponseEntity.ok(List.of(dummyItem));
+    public ResponseEntity<?> deleteItem(@PathVariable("itemRef") Long itemRef) {
+        itemService.delete(itemRef);
+        return ResponseEntity.ok().build();
     }
 
 }

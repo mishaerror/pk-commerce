@@ -9,7 +9,8 @@ CREATE TABLE ITEMS
     name VARCHAR(100) UNIQUE NOT NULL,
     amount DECIMAL(10, 2),
     currency VARCHAR(3),
-    discount DECIMAL(3,2),
+    discount DECIMAL(5,2),
     image_ref VARCHAR(20),
+    count INTEGER,
     merchant_ref BIGINT NOT NULL
 );

@@ -24,6 +24,8 @@ public class ItemEntity {
 
     private Long merchantRef;
 
+    private Integer count;
+
     public Long getId() {
         return id;
     }
@@ -86,5 +88,13 @@ public class ItemEntity {
 
     public void setMerchantRef(Long merchantRef) {
         this.merchantRef = merchantRef;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }
