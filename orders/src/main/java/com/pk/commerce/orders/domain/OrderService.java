@@ -45,15 +45,16 @@ public class OrderService {
         String address2 = orderRequest.addressLineTwo();
         String addressCity = orderRequest.addressCity();
         String postalCode = orderRequest.addressPostalCode();
-        String customerEmail = orderRequest.customerEmail();
+        String customerEmail = orderRequest.email();
         String customerName = orderRequest.customerName();
+        String customerPhone = orderRequest.phone();
 
         OrderEntity orderEntity = new OrderEntity(
                 orderRepository.refSequence(),
                 merchant.getMerchantRef().refId(),
                 count,
                 new Timestamp(System.currentTimeMillis()),
-                address1, address2, addressCity, postalCode, customerName, customerEmail);
+                address1, address2, addressCity, postalCode, customerName, customerEmail, customerPhone);
 
         orderRepository.save(orderEntity);
 

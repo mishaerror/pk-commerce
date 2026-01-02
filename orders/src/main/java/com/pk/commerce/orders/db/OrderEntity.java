@@ -2,6 +2,7 @@ package com.pk.commerce.orders.db;
 
 import com.pk.commerce.orders.api.Order;
 import com.pk.commerce.orders.api.OrderAddress;
+import com.pk.commerce.orders.api.OrderContact;
 import com.pk.commerce.orders.api.OrderRef;
 import com.pk.commerce.orders.state.OrderState;
 import org.springframework.data.annotation.Id;
@@ -38,7 +39,9 @@ public class OrderEntity {
 
     private Integer count;
 
-    public OrderEntity(Long ref, Long merchantRef, Integer count, Timestamp createdAt, String addressLineOne, String addressLineTwo, String addressCity, String addressPostalCode, String customerName, String customerEmail) {
+    private String customerPhone;
+
+    public OrderEntity(Long ref, Long merchantRef, Integer count, Timestamp createdAt, String addressLineOne, String addressLineTwo, String addressCity, String addressPostalCode, String customerName, String customerEmail, String customerPhone) {
         this.ref = ref;
         this.merchantRef = merchantRef;
         this.createdAt = createdAt;
@@ -48,6 +51,7 @@ public class OrderEntity {
         this.addressPostalCode = addressPostalCode;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
         this.state = OrderState.CUSTOMER_INITIATED.name();
         this.count = count;
     }
@@ -61,6 +65,7 @@ public class OrderEntity {
         order.setOrderAddress(
                 new OrderAddress(this.customerName, this.addressLineOne, this.addressLineTwo, this.addressPostalCode, this.addressCity)
         );
+        order.setOrderContact(new OrderContact(this.customerPhone, this.customerEmail));
 
         return order;
     }
@@ -167,5 +172,13 @@ public class OrderEntity {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 }

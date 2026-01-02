@@ -6,6 +6,7 @@ public class Order {
     private OrderRef orderRef;
     private OrderState state;
     private OrderAddress orderAddress;
+    private OrderContact orderContact;
     private Integer count;
 
     public Order() {
@@ -46,5 +47,13 @@ public class Order {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public OrderContact getOrderContact() {
+        return orderContact;
+    }
+
+    public void setOrderContact(OrderContact orderContact) {
+        this.orderContact = orderContact;
     }
 }

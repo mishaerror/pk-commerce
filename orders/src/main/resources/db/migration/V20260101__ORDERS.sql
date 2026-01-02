@@ -6,7 +6,7 @@ CREATE TABLE ORDERS
 (
     id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     ref BIGINT UNIQUE,
-    state VARCHAR(100) UNIQUE NOT NULL,
+    state VARCHAR(100) NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     address_line_one VARCHAR(200),
@@ -15,6 +15,7 @@ CREATE TABLE ORDERS
     address_city VARCHAR(100),
     customer_name VARCHAR(100),
     customer_email VARCHAR(100),
+    customer_phone VARCHAR(50),
     merchant_ref BIGINT NOT NULL,
     count INTEGER NOT NULL
 );

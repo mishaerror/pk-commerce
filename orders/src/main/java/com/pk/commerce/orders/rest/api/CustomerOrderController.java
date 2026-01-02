@@ -15,8 +15,6 @@ public class CustomerOrderController {
 
     @PostMapping
     public ResponseEntity<?> orderItem(@RequestBody OrderRequest orderRequest) {
-
-
         orderService.orderItem(orderRequest);
         return ResponseEntity.ok().build();
     }
