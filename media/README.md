@@ -1,1 +1,0 @@
-This module will be a wrapper for media (images, videos) handled on the platform.

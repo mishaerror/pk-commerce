@@ -1,6 +1,7 @@
 package com.pk.commerce.merchant.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,14 @@ public class JwtService {
 
     public JwtService(@Value("${custom.security.oauth2.jwt-secret}") String jwtSecret) {
         SecretKeySpec secretKey = new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), "HS256");
-        jwtEncoder = NimbusJwtEncoder.withSecretKey(secretKey).build();
-        jwtDecoder = NimbusJwtDecoder.withSecretKey(secretKey).build();
+        jwtEncoder = NimbusJwtEncoder
+                .withSecretKey(secretKey)
+                .algorithm(MacAlgorithm.HS256)
+                .build();
+        jwtDecoder = NimbusJwtDecoder
+                .withSecretKey(secretKey)
+                .macAlgorithm(MacAlgorithm.HS256)
+                .build();
     }
 
     public Jwt decode(String input) {
