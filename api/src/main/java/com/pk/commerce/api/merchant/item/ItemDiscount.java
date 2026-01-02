@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.api.item;
+package com.pk.commerce.api.merchant.item;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

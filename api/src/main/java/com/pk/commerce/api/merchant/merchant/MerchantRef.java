@@ -1,11 +1,11 @@
-package com.pk.commerce.merchant.api.item;
+package com.pk.commerce.api.merchant.merchant;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jspecify.annotations.NonNull;
 
-public record ItemName(@JsonValue String name) {
+public record MerchantRef(@JsonValue Long refId) {
     @Override
     public @NonNull String toString() {
-        return name;
+        return Long.toString(refId);
     }
 }

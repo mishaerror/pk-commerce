@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.api.merchant;
+package com.pk.commerce.api.merchant.merchant;
 
 public enum MerchantStatus {
     PENDING,

@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.api.category;
+package com.pk.commerce.api.merchant.category;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
