@@ -1,5 +1,8 @@
 package com.pk.commerce.orders.db;
 
+import com.pk.commerce.orders.api.Order;
+import com.pk.commerce.orders.api.OrderAddress;
+import com.pk.commerce.orders.api.OrderRef;
 import com.pk.commerce.orders.state.OrderState;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -33,7 +36,7 @@ public class OrderEntity {
 
     private String customerEmail;
 
-    private int count;
+    private Integer count;
 
     public OrderEntity(Long ref, Long merchantRef, Integer count, Timestamp createdAt, String addressLineOne, String addressLineTwo, String addressCity, String addressPostalCode, String customerName, String customerEmail) {
         this.ref = ref;
@@ -47,6 +50,19 @@ public class OrderEntity {
         this.customerEmail = customerEmail;
         this.state = OrderState.CUSTOMER_INITIATED.name();
         this.count = count;
+    }
+
+    public Order toOrder() {
+        Order order = new Order();
+
+        order.setOrderRef(new OrderRef(this.ref));
+        order.setCount(this.count);
+        order.setState(OrderState.valueOf(this.state));
+        order.setOrderAddress(
+                new OrderAddress(this.customerName, this.addressLineOne, this.addressLineTwo, this.addressPostalCode, this.addressCity)
+        );
+
+        return order;
     }
 
     public Long getId() {
@@ -145,11 +161,11 @@ public class OrderEntity {
         this.customerEmail = customerEmail;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 }

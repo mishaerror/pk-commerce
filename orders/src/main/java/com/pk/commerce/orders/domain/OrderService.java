@@ -3,6 +3,7 @@ package com.pk.commerce.orders.domain;
 import com.pk.commerce.api.merchant.item.Item;
 import com.pk.commerce.api.merchant.merchant.Merchant;
 import com.pk.commerce.api.merchant.merchant.MerchantStatus;
+import com.pk.commerce.orders.api.Order;
 import com.pk.commerce.orders.db.OrderEntity;
 import com.pk.commerce.orders.db.OrderRepository;
 import com.pk.commerce.orders.rest.api.DirectCallMerchantProxy;
@@ -10,6 +11,7 @@ import com.pk.commerce.orders.rest.api.OrderRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -19,6 +21,11 @@ public class OrderService {
     public OrderService(DirectCallMerchantProxy merchantProxy, OrderRepository orderRepository) {
         this.merchantProxy = merchantProxy;
         this.orderRepository = orderRepository;
+    }
+
+    public List<Order> ordersForMerchant(Long merchantRef) {
+        List<OrderEntity> orderEntities = orderRepository.findOrdersForMerchant(merchantRef);
+        return orderEntities.stream().map(OrderEntity::toOrder).toList();
     }
 
     public void orderItem(OrderRequest orderRequest) {
@@ -70,4 +77,9 @@ public class OrderService {
         return merchant;
     }
 
+    public Order findOrderByRefAndMerchant(Long orderRef, Long merchantRef) {
+        return orderRepository.findOrderByRefAndMerchant(orderRef, merchantRef).orElseThrow(
+                () -> new IllegalArgumentException("Unknown order")
+        ).toOrder();
+    }
 }
