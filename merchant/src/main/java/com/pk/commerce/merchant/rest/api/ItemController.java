@@ -2,11 +2,13 @@ package com.pk.commerce.merchant.rest.api;
 
 import com.pk.commerce.merchant.api.item.Item;
 import com.pk.commerce.merchant.domain.item.ItemService;
+import com.pk.commerce.merchant.utils.ShortUrl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/api/items")
 public class ItemController {
     private final ItemService itemService;
+
+    private static final String SHORTURL_BASE_PATH = "https://pk-commerce.co/shop/";
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -56,6 +60,13 @@ public class ItemController {
     public ResponseEntity<?> deleteItem(@PathVariable("itemRef") Long itemRef) {
         itemService.delete(itemRef);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/short/{ref}")
+    public ResponseEntity<?> shortUrlForItem(@PathVariable("ref") Long ref) {
+        String url = SHORTURL_BASE_PATH + ShortUrl.encode(BigInteger.valueOf(ref));
+
+        return ResponseEntity.ok(url);
     }
 
 }

@@ -86,4 +86,10 @@ public class ItemService {
         ItemEntity itemEntity = repository.findByRef(itemRef, MerchantRequestContext.getMerchantRefLong()).orElseThrow(notFoundExceptionSupplier(itemRef));
         repository.delete(itemEntity);
     }
+
+    public Item findByRef(Long itemRef) {
+        ItemEntity itemEntity = repository.findByRef(itemRef).orElseThrow(notFoundExceptionSupplier(itemRef));
+
+        return entityToDto.apply(itemEntity);
+    }
 }
