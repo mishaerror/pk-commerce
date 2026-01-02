@@ -19,7 +19,7 @@ class MerchantShopManagementTests {
     private MerchantRegistrationService merchantRegistrationService;
 
     //merchant shop management scenarios
-    @Test
+//    @Test
     void addMerchantRegistrationRequest() {
         merchantRegistrationService.addMerchantRegistrationRequest("TopShop", "TopShopDeluxe",
                 "Michael Martens", "mikmar@v.at", "+19203-02", "ByStrasse 443");

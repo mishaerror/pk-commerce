@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: orders
+  security:
+  ssl:
+    bundle:
+      jks:
+        server:
+          keystore:
+            location: classpath:keystore/orders.p12
+            password: md9ewvpsd
+            type: PKCS12
+
+server:
+  port: 8453
+  ssl:
+    bundle: server

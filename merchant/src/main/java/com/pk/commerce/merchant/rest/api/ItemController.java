@@ -16,9 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/items")
 public class ItemController {
-    private final ItemService itemService;
-
     private static final String SHORTURL_BASE_PATH = "https://pk-commerce.co/shop/";
+    private final ItemService itemService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;

@@ -9,22 +9,22 @@ import org.springframework.context.annotation.Import;
 class MerchantCategoriesTests {
 
     @Test
-    void addCategory(){
+    void addCategory() {
 
     }
 
     @Test
-    void editCategory(){
+    void editCategory() {
 
     }
 
     @Test
-    void removeCategory(){
+    void removeCategory() {
 
     }
 
     @Test
-    void addSubcategory(){
+    void addSubcategory() {
 
     }
 

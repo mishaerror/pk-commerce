@@ -15,12 +15,12 @@ class MerchantItemManagementTests {
     }
 
     @Test
-    void merchantRegistrationApproved(){
+    void merchantRegistrationApproved() {
 
     }
 
     @Test
-    void merchantRegistrationRejected(){
+    void merchantRegistrationRejected() {
 
     }
 
@@ -35,7 +35,7 @@ class MerchantItemManagementTests {
     }
 
     @Test
-    void merchantDeletesShop(){
+    void merchantDeletesShop() {
 
     }
 
@@ -73,7 +73,7 @@ class MerchantItemManagementTests {
     //category management
 
     @Test
-    void addCategory(){
+    void addCategory() {
 
     }
 

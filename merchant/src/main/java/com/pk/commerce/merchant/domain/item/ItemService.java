@@ -7,6 +7,7 @@ import com.pk.commerce.api.merchant.item.ItemDiscount;
 import com.pk.commerce.api.merchant.item.ItemName;
 import com.pk.commerce.api.merchant.item.ItemPrice;
 import com.pk.commerce.api.merchant.item.ItemRef;
+import com.pk.commerce.api.merchant.merchant.MerchantRef;
 import com.pk.commerce.merchant.config.MerchantRequestContext;
 import com.pk.commerce.merchant.db.ItemEntity;
 import com.pk.commerce.merchant.db.ItemRepository;
@@ -30,7 +31,8 @@ public class ItemService {
                 entity.getCount(),
                 new ItemPrice(new Amount(entity.getAmount()), CurrencyCode.valueOf(entity.getCurrency())),
                 discount,
-                null
+                null,
+                new MerchantRef(entity.getMerchantRef())
         );
     };
 

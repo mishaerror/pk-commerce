@@ -31,8 +31,8 @@ server:
 
 custom.security:
   oauth2:
-#    redirect-url: http://localhost:5173/auth/callback
-    redirect-url: https://pk-commerce.co/auth/callback
+    redirect-url: http://localhost:5173/auth/callback
+    #    redirect-url: https://pk-commerce.co/auth/callback
     jwt-secret: kwlvIo30PkalqxZmTeklspOgfrTKFMDsuQzwBE39tzPqmsedyakfhjOAU
     jwt-expiry: 30
   token:
