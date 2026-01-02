@@ -1,8 +1,8 @@
 package com.pk.commerce.merchant.domain.merchant;
 
-import com.pk.commerce.merchant.api.category.Category;
-import com.pk.commerce.merchant.api.category.CategoryName;
-import com.pk.commerce.merchant.api.category.CategoryRef;
+import com.pk.commerce.api.merchant.category.Category;
+import com.pk.commerce.api.merchant.category.CategoryName;
+import com.pk.commerce.api.merchant.category.CategoryRef;
 import com.pk.commerce.merchant.config.MerchantRequestContext;
 import com.pk.commerce.merchant.db.CategoryEntity;
 import com.pk.commerce.merchant.db.CategoryRepository;

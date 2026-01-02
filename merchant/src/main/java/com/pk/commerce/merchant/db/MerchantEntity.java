@@ -1,7 +1,7 @@
 package com.pk.commerce.merchant.db;
 
-import com.pk.commerce.merchant.api.merchant.Merchant;
-import com.pk.commerce.merchant.api.merchant.MerchantStatus;
+import com.pk.commerce.api.merchant.merchant.Merchant;
+import com.pk.commerce.api.merchant.merchant.MerchantStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 

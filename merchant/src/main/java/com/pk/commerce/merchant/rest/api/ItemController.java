@@ -1,6 +1,6 @@
 package com.pk.commerce.merchant.rest.api;
 
-import com.pk.commerce.merchant.api.item.Item;
+import com.pk.commerce.api.merchant.item.Item;
 import com.pk.commerce.merchant.domain.item.ItemService;
 import com.pk.commerce.merchant.utils.ShortUrl;
 import org.springframework.http.ResponseEntity;

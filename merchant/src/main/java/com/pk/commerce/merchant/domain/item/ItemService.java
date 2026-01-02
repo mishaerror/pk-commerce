@@ -1,8 +1,12 @@
 package com.pk.commerce.merchant.domain.item;
 
-import com.pk.commerce.merchant.api.Amount;
-import com.pk.commerce.merchant.api.CurrencyCode;
-import com.pk.commerce.merchant.api.item.*;
+
+import com.pk.commerce.api.merchant.Amount;
+import com.pk.commerce.api.merchant.CurrencyCode;
+import com.pk.commerce.api.merchant.item.ItemDiscount;
+import com.pk.commerce.api.merchant.item.ItemName;
+import com.pk.commerce.api.merchant.item.ItemPrice;
+import com.pk.commerce.api.merchant.item.ItemRef;
 import com.pk.commerce.merchant.config.MerchantRequestContext;
 import com.pk.commerce.merchant.db.ItemEntity;
 import com.pk.commerce.merchant.db.ItemRepository;
@@ -18,9 +22,9 @@ import java.util.function.Supplier;
 @Service
 public class ItemService {
     private final ItemRepository repository;
-    private final Function<ItemEntity, Item> entityToDto = entity -> {
+    private final Function<ItemEntity, com.pk.commerce.api.merchant.item.Item> entityToDto = entity -> {
         ItemDiscount discount = entity.getDiscount() != null ? new ItemDiscount(entity.getDiscount()) : null;
-        return new Item(
+        return new com.pk.commerce.api.merchant.item.Item(
                 new ItemRef(entity.getRef()),
                 new ItemName(entity.getName()),
                 entity.getCount(),
@@ -73,7 +77,7 @@ public class ItemService {
         repository.save(entity);
     }
 
-    public List<Item> findByName(String name) {
+    public List<com.pk.commerce.api.merchant.item.Item> findByName(String name) {
         String nameLike = StringUtils.hasText(name) ? "%" + name.trim() + "%" : "%";
 
         List<ItemEntity> entities = repository.findByName(nameLike, MerchantRequestContext.getMerchantRefLong());
@@ -87,7 +91,7 @@ public class ItemService {
         repository.delete(itemEntity);
     }
 
-    public Item findByRef(Long itemRef) {
+    public com.pk.commerce.api.merchant.item.Item findByRef(Long itemRef) {
         ItemEntity itemEntity = repository.findByRef(itemRef).orElseThrow(notFoundExceptionSupplier(itemRef));
 
         return entityToDto.apply(itemEntity);
