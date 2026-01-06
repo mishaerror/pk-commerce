@@ -1,8 +1,8 @@
 package com.pk.commerce.merchant.rest.api;
 
-import com.pk.commerce.api.merchant.category.Category;
-import com.pk.commerce.api.merchant.category.CategoryName;
-import com.pk.commerce.api.merchant.category.CategoryRef;
+import com.pk.commerce.merchant.api.category.Category;
+import com.pk.commerce.merchant.api.category.CategoryName;
+import com.pk.commerce.merchant.api.category.CategoryRef;
 import com.pk.commerce.merchant.domain.merchant.CategoriesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

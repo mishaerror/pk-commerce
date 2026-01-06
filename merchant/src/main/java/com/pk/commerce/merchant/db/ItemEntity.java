@@ -1,6 +1,7 @@
 package com.pk.commerce.merchant.db;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
@@ -23,6 +24,8 @@ public class ItemEntity {
     private String imageRef;
 
     private Long merchantRef;
+
+    private String merchantStatus;
 
     private Integer count;
 
@@ -96,5 +99,13 @@ public class ItemEntity {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getMerchantStatus() {
+        return merchantStatus;
+    }
+
+    public void setMerchantStatus(String merchantStatus) {
+        this.merchantStatus = merchantStatus;
     }
 }

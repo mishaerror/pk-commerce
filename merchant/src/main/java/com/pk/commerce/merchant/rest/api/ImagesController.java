@@ -1,6 +1,6 @@
 package com.pk.commerce.merchant.rest.api;
 
-import com.pk.commerce.api.merchant.RestResponse;
+import com.pk.commerce.merchant.api.RestResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

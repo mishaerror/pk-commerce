@@ -32,7 +32,6 @@
     </properties>
     <modules>
         <module>merchant</module>
-        <module>api</module>
     </modules>
 
 </project>

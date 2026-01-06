@@ -1,7 +1,7 @@
 package com.pk.commerce.merchant.domain.merchant;
 
-import com.pk.commerce.api.merchant.merchant.Merchant;
-import com.pk.commerce.api.merchant.merchant.MerchantRef;
+import com.pk.commerce.merchant.api.merchant.Merchant;
+import com.pk.commerce.merchant.api.merchant.MerchantRef;
 import com.pk.commerce.merchant.db.MerchantRepository;
 import org.springframework.stereotype.Service;
 
