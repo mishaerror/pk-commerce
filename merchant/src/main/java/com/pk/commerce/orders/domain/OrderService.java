@@ -4,8 +4,12 @@ import com.pk.commerce.merchant.api.item.Item;
 import com.pk.commerce.merchant.api.merchant.MerchantStatus;
 import com.pk.commerce.merchant.domain.item.ItemService;
 import com.pk.commerce.orders.Order;
+import com.pk.commerce.orders.OrderRef;
+import com.pk.commerce.orders.OrderState;
 import com.pk.commerce.orders.db.OrderEntity;
 import com.pk.commerce.orders.db.OrderRepository;
+import com.pk.commerce.orders.event.*;
+import com.pk.commerce.orders.rest.api.OrderActionRequest;
 import com.pk.commerce.orders.rest.api.OrderRequest;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +58,7 @@ public class OrderService {
                 count,
                 new Timestamp(System.currentTimeMillis()),
                 address1, address2, addressCity, postalCode, customerName, customerEmail, customerPhone);
+        orderEntity.setState(OrderState.CUSTOMER_ENTERED.name());
 
         orderRepository.save(orderEntity);
 
@@ -65,6 +70,27 @@ public class OrderService {
         verifyMerchant(item);
         //return item details
         return item;
+    }
+
+    public OrderState orderAction(OrderActionRequest.Action action, Long orderRef) {
+        OrderEntity orderEntity = orderRepository.findOrderByRef(orderRef).orElseThrow(() -> new IllegalArgumentException("Unknown order"));
+        OrderRef ref = new OrderRef(orderRef);
+
+        OrderState orderState = OrderState.valueOf(orderEntity.getState());
+        var event = switch (action) {
+            case SEND -> new MerchantSentOrderEvent(ref, System.currentTimeMillis());
+            case RETURN -> new OrderReturnedEvent(ref, System.currentTimeMillis());
+            case CONFIRM -> new MerchantConfirmedOrderEvent(ref, System.currentTimeMillis());
+            case DECLINE -> new MerchantDeclinedOrderEvent(ref, System.currentTimeMillis());
+            case DELIVER -> new OrderDeliveredEvent(ref, System.currentTimeMillis());
+        };
+        OrderState nextState = orderState.nextState(event);
+
+        orderEntity.setState(nextState.name());
+
+        orderRepository.save(orderEntity);
+
+        return nextState;
     }
 
     private void verifyMerchant(Item item) {

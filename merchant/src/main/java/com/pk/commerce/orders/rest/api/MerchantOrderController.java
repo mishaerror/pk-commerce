@@ -2,12 +2,10 @@ package com.pk.commerce.orders.rest.api;
 
 import com.pk.commerce.config.MerchantRequestContext;
 import com.pk.commerce.orders.Order;
+import com.pk.commerce.orders.OrderState;
 import com.pk.commerce.orders.domain.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,12 @@ public class MerchantOrderController {
     public ResponseEntity<?> getOrderByRef(@PathVariable("orderRef") Long orderRef) {
         Order order = orderService.findOrderByRefAndMerchant(orderRef, MerchantRequestContext.getMerchantRefLong());
         return ResponseEntity.ok(order);
+    }
+
+    @PostMapping("/{orderRef}/actions")
+    public ResponseEntity<?> postAction(@PathVariable("orderRef") Long orderRef, @RequestBody OrderActionRequest actionRequest) {
+        OrderState nextState = orderService.orderAction(actionRequest.action(), orderRef);
+        return ResponseEntity.ok(nextState);
     }
 
     @GetMapping

@@ -18,4 +18,7 @@ public interface OrderRepository extends CrudRepository<OrderEntity, Long> {
 
     @Query("SELECT * from orders o where o.ref = :orderRef and o.merchant_ref = :merchantRef")
     Optional<OrderEntity> findOrderByRefAndMerchant(@Param("orderRef") Long orderRef, @Param("merchantRef") Long merchantRef);
+
+    @Query("SELECT * from orders o where o.ref = :orderRef")
+    Optional<OrderEntity> findOrderByRef(@Param("orderRef") Long orderRef);
 }
