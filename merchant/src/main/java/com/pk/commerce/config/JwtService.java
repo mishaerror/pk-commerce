@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.config;
+package com.pk.commerce.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;

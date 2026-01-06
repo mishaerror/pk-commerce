@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.config;
+package com.pk.commerce.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.pk.commerce.merchant.config.AuthConstants.AUTH_COOKIE_NAME;
+import static com.pk.commerce.config.AuthConstants.AUTH_COOKIE_NAME;
 
 @Component
 public class TokenCookieFilter extends OncePerRequestFilter {

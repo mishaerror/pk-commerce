@@ -1,6 +1,6 @@
 package com.pk.commerce.merchant.rest.api;
 
-import com.pk.commerce.merchant.config.JwtService;
+import com.pk.commerce.config.JwtService;
 import com.pk.commerce.merchant.db.MerchantEntity;
 import com.pk.commerce.merchant.domain.admin.MerchantRegistrationService;
 import jakarta.servlet.http.Cookie;

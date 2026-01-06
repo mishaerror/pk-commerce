@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.config;
+package com.pk.commerce.config;
 
 import com.pk.commerce.merchant.domain.admin.MerchantRegistrationService;
 import jakarta.servlet.FilterChain;

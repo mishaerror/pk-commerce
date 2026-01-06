@@ -1,4 +1,4 @@
-package com.pk.commerce.merchant.config;
+package com.pk.commerce.config;
 
 public class MerchantRequestContext {
     // Make ThreadLocal static and final

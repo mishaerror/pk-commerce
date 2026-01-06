@@ -1,9 +1,10 @@
-package com.pk.commerce.merchant.config;
+package com.pk.commerce.config;
 
 public class AuthConstants {
     public static final String AUTH_COOKIE_NAME = "Auth";
     public static final String[] EXCLUDE_AUTH_PATTERNS = {
             "/", "/login/", "/logout",
+            "/api/customer/**",
             "/error",
             "/static/**",
             "/oauth_login",
