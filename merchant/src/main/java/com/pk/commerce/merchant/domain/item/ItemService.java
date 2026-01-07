@@ -1,6 +1,7 @@
 package com.pk.commerce.merchant.domain.item;
 
 
+import com.pk.commerce.config.MerchantRequestContext;
 import com.pk.commerce.merchant.api.Amount;
 import com.pk.commerce.merchant.api.CurrencyCode;
 import com.pk.commerce.merchant.api.item.ItemDiscount;
@@ -9,7 +10,6 @@ import com.pk.commerce.merchant.api.item.ItemPrice;
 import com.pk.commerce.merchant.api.item.ItemRef;
 import com.pk.commerce.merchant.api.merchant.MerchantRef;
 import com.pk.commerce.merchant.api.merchant.MerchantStatus;
-import com.pk.commerce.config.MerchantRequestContext;
 import com.pk.commerce.merchant.db.ItemEntity;
 import com.pk.commerce.merchant.db.ItemRepository;
 import com.pk.commerce.merchant.db.MerchantRepository;
@@ -25,11 +25,6 @@ import java.util.function.Supplier;
 @Service
 public class ItemService {
     private final ItemRepository repository;
-
-    public ItemService(ItemRepository repository, MerchantRepository merchantRepository) {
-        this.repository = repository;
-    }
-
     private final Function<ItemEntity, com.pk.commerce.merchant.api.item.Item> entityToDto = entity -> {
         ItemDiscount discount = entity.getDiscount() != null ? new ItemDiscount(entity.getDiscount()) : null;
         return new com.pk.commerce.merchant.api.item.Item(
@@ -43,6 +38,10 @@ public class ItemService {
                 MerchantStatus.valueOf(entity.getMerchantStatus())
         );
     };
+
+    public ItemService(ItemRepository repository, MerchantRepository merchantRepository) {
+        this.repository = repository;
+    }
 
     private static @NonNull Supplier<IllegalArgumentException> notFoundExceptionSupplier(Long ref) {
         return () -> new IllegalArgumentException(String.format("Item not found by ref: %s", ref));
