@@ -1,13 +1,12 @@
 package com.pk.commerce.orders.db;
 
-import com.pk.commerce.orders.Order;
-import com.pk.commerce.orders.OrderAddress;
-import com.pk.commerce.orders.OrderContact;
-import com.pk.commerce.orders.OrderRef;
-import com.pk.commerce.orders.OrderState;
+import com.pk.commerce.merchant.api.Amount;
+import com.pk.commerce.merchant.api.CurrencyCode;
+import com.pk.commerce.orders.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Table("orders")
@@ -41,6 +40,12 @@ public class OrderEntity {
 
     private String customerPhone;
 
+    private BigDecimal totalAmount;
+
+    private String totalCurrency;
+
+    private Timestamp orderTime;
+
     public OrderEntity(Long ref, Long merchantRef, Integer count, Timestamp createdAt, String addressLineOne, String addressLineTwo, String addressCity, String addressPostalCode, String customerName, String customerEmail, String customerPhone) {
         this.ref = ref;
         this.merchantRef = merchantRef;
@@ -66,6 +71,9 @@ public class OrderEntity {
                 new OrderAddress(this.customerName, this.addressLineOne, this.addressLineTwo, this.addressPostalCode, this.addressCity)
         );
         order.setOrderContact(new OrderContact(this.customerPhone, this.customerEmail));
+        order.setOrderTotal(new Amount(this.totalAmount));
+        order.setOrderCurrency(CurrencyCode.valueOf(this.totalCurrency));
+        order.setOrderTime(this.orderTime.toLocalDateTime());
 
         return order;
     }
@@ -180,5 +188,29 @@ public class OrderEntity {
 
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getTotalCurrency() {
+        return totalCurrency;
+    }
+
+    public void setTotalCurrency(String totalCurrency) {
+        this.totalCurrency = totalCurrency;
+    }
+
+    public Timestamp getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Timestamp orderTime) {
+        this.orderTime = orderTime;
     }
 }

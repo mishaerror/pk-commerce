@@ -17,5 +17,8 @@ CREATE TABLE ORDERS
     customer_email VARCHAR(100),
     customer_phone VARCHAR(50),
     merchant_ref BIGINT NOT NULL,
-    count INTEGER NOT NULL
+    count INTEGER NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    total_currency  VARCHAR(3) NOT NULL,
+    order_time TIMESTAMP NOT NULL
 );

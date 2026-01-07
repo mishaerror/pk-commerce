@@ -7,6 +7,7 @@ import com.pk.commerce.orders.domain.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //merchant order management
@@ -32,10 +33,20 @@ public class MerchantOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<?>> getOrders() {
-        List<Order> orders = orderService.ordersForMerchant(MerchantRequestContext.getMerchantRefLong());
+    public ResponseEntity<List<?>> getOrders(@RequestParam(name = "days", defaultValue = "10") Integer days,
+                                             @RequestParam(value = "dateFrom", required = false) LocalDate dateFrom,
+                                             @RequestParam(value = "dateTo", required = false) LocalDate dateTo,
+                                             @RequestParam(value = "status", required = false) OrderState orderState) {
+        if (dateFrom == null) {
+            dateFrom = LocalDate.now().minusDays(days);
+        }
+        if (dateTo == null) {
+            dateTo = LocalDate.now();
+        }
+        String stateParam = orderState != null ? orderState.name() : "%";
+
+        List<Order> orders = orderService.ordersForMerchant(MerchantRequestContext.getMerchantRefLong(), dateFrom, dateTo, stateParam);
+
         return ResponseEntity.ok(orders);
     }
-    //view and filter orders
-    //update order status
 }

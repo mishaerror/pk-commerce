@@ -1,7 +1,6 @@
 package com.pk.commerce.merchant.db;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;

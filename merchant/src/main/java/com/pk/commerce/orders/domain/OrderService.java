@@ -1,5 +1,6 @@
 package com.pk.commerce.orders.domain;
 
+import com.pk.commerce.merchant.api.Amount;
 import com.pk.commerce.merchant.api.item.Item;
 import com.pk.commerce.merchant.api.merchant.MerchantStatus;
 import com.pk.commerce.merchant.domain.item.ItemService;
@@ -13,7 +14,10 @@ import com.pk.commerce.orders.rest.api.OrderActionRequest;
 import com.pk.commerce.orders.rest.api.OrderRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -28,6 +32,15 @@ public class OrderService {
 
     public List<Order> ordersForMerchant(Long merchantRef) {
         List<OrderEntity> orderEntities = orderRepository.findOrdersForMerchant(merchantRef);
+        return orderEntities.stream().map(OrderEntity::toOrder).toList();
+    }
+
+    public List<Order> ordersForMerchant(Long merchantRef, LocalDate dateFrom, LocalDate dateTo,
+                                         String orderState) {
+        Timestamp timestampFrom = new Timestamp(dateFrom.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli());
+        Timestamp timestampTo = new Timestamp(dateTo.atTime(23, 59).toInstant(ZoneOffset.UTC).toEpochMilli());
+
+        List<OrderEntity> orderEntities = orderRepository.findOrdersForMerchantAndTime(merchantRef, timestampFrom, timestampTo, orderState);
         return orderEntities.stream().map(OrderEntity::toOrder).toList();
     }
 
@@ -60,8 +73,19 @@ public class OrderService {
                 address1, address2, addressCity, postalCode, customerName, customerEmail, customerPhone);
         orderEntity.setState(OrderState.CUSTOMER_ENTERED.name());
 
-        orderRepository.save(orderEntity);
+        BigDecimal itemDiscountPercent = item.discount() != null ? item.discount().percent() : BigDecimal.valueOf(0);
+        Amount totalDiscount = item.price().amount().percent(itemDiscountPercent);
 
+        Amount totalAmount = item.price().amount().subtract(totalDiscount);
+
+        String totalCurrency = item.price().currency().name();
+
+        orderEntity.setTotalAmount(totalAmount.amount());
+        orderEntity.setTotalCurrency(totalCurrency);
+
+        orderEntity.setOrderTime(new Timestamp(System.currentTimeMillis()));
+
+        orderRepository.save(orderEntity);
     }
 
     public Item initiateOrder(Long itemRef) {
